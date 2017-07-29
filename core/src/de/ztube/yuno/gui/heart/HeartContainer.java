@@ -13,6 +13,8 @@ import de.ztube.yuno.Yuno;
  * Created by ZTube on 18.07.2016.
  * Yuno
  */
+
+/**The HeartContainer manages the Hearts and displays them in a row*/
 public class HeartContainer extends Actor implements Disposable {
     private final AssetManager assets;
     private Array<Heart> hearts;
@@ -35,6 +37,7 @@ public class HeartContainer extends Actor implements Disposable {
 
     }
 
+    //Add new Hearts
     public void addHeart(int count) {
         for (int i = 0; i <= count; i++) {
             hearts.add(new Heart(assets, Heart.HeartState.EMPTY));
@@ -51,6 +54,7 @@ public class HeartContainer extends Actor implements Disposable {
         }
     }
 
+    //Remove a Heart
     public void removeHeart(int count) {
         for (int i = 0; i <= count; i++) {
             hearts.pop().dispose();
@@ -67,14 +71,17 @@ public class HeartContainer extends Actor implements Disposable {
         }
     }
 
+    //Add one Heart
     public void addHeart() {
         addHeart(1);
     }
 
+    //Remove one Heart
     public void removeHeart() {
         removeHeart(1);
     }
 
+    //Damage by int lifes
     public void damage(int lifes) {
         int damage = lifes;
         hearts.reverse();
@@ -105,6 +112,7 @@ public class HeartContainer extends Actor implements Disposable {
         hearts.reverse();
     }
 
+    //Heal lifes
     public void heal(int lifes) {
         int heal = lifes;
 
@@ -133,18 +141,22 @@ public class HeartContainer extends Actor implements Disposable {
         }
     }
 
+    //Recover from all damage
     public void fullHeal() {
         heal(getTotalLifes() - getLifes());
     }
 
+    //Kill
     public void kill() {
         damage(getLifes());
     }
 
+    //Returns the with of the Actor
     public int getContainerWidth() {
         return Math.round(hearts.peek().getX() + hearts.peek().getWidth() - hearts.first().getX());
     }
 
+    //Returns the current lifes
     public int getLifes() {
         int lifes = 0;
         for (Heart heart : hearts) {
@@ -157,6 +169,7 @@ public class HeartContainer extends Actor implements Disposable {
         return lifes;
     }
 
+    //Returns the total lifes
     public int getTotalLifes() {
         int lifes = 0;
         for (int i = 0; i < hearts.size; i++) {
@@ -172,6 +185,7 @@ public class HeartContainer extends Actor implements Disposable {
         }
     }
 
+    //Render the hearts
     @Override
     public void draw(Batch batch, float parentAlpha) {
         Color color = getColor();

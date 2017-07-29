@@ -27,20 +27,35 @@ import de.ztube.yuno.gui.GUI;
  * Created by ZTube on 17.07.2016.
  * Yuno
  */
+
+/**The main Game class*/
 public class Game implements Screen {
 
     private final AssetManager assets;
+
+    //The SpriteBatch
     private SpriteBatch batch;
+
+    //The camera
     private OrthographicCamera camera;
+
+    //The current map and renderer
     private TiledMap map;
     private TiledMapRenderer renderer;
+
+    //The Player
     private Player player;
 
+    //Shader
     private ShaderProgram shader;
 
+    //The GUI
     private GUI gui;
 
+
     private int mapWidth, mapHeight, mapTileWidth, mapTileHeight;
+
+    //List of MapLayers which should be displayed either over, or under the player
     private IntArray renderOverPlayer = new IntArray();
     private IntArray renderUnderPlayer = new IntArray();
 
@@ -54,10 +69,12 @@ public class Game implements Screen {
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        //Set uniform "u_rand" to a random number for noise shading. TODO: better way?
         shader.begin();
         shader.setUniformf("u_rand", MathUtils.random(0f, 1f));
         shader.end();
 
+        //Update the camera position according to the players position
         updateCameraPosition();
 
         camera.update();
@@ -68,11 +85,13 @@ public class Game implements Screen {
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
+        //Draw the Player
         player.draw(batch);
         batch.end();
 
         renderer.render(renderOverPlayer.toArray());
 
+        //Draw the GUI
         gui.draw(delta);
     }
 
@@ -93,6 +112,7 @@ public class Game implements Screen {
 
         ShaderProgram.pedantic = false;
 
+        //Initialize the shader
         shader = new ShaderProgram(Gdx.files.internal("shaders/passthrough.vsh"), Gdx.files.internal("shaders/vignette.fsh"));
         if (!shader.isCompiled())
             Gdx.app.error("Yuno", shader.getLog());
@@ -107,6 +127,7 @@ public class Game implements Screen {
         calendar.setTime(date);   // assigns calendar to given date
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
 
+        //In the night everything looks blueish and noisy
 
         //Day
         if (hour <= 18 && hour >= 6) {
@@ -124,7 +145,11 @@ public class Game implements Screen {
     }
 
     private void updateCameraPosition() {
+        //Camera follows the Player
         camera.position.set(player.getX() + player.getWidth() / 2, player.getY() + player.getHeight() / 2, 1);
+
+
+        //Camera stops following the Player if he reaches the end of the map
 
         //OutTop
         if (player.getY() + player.getHeight() / 2 > mapTileHeight * mapHeight - camera.viewportHeight / 2) {
@@ -146,6 +171,7 @@ public class Game implements Screen {
     }
 
 
+    //Update the map returning itself
     public TiledMap setMap(String mapPath) {
         map = assets.get(mapPath, TiledMap.class);
 
@@ -163,6 +189,7 @@ public class Game implements Screen {
         for (int i = 0; i < map.getLayers().getCount(); i++) {
             MapLayer layer = map.getLayers().get(i);
 
+            //assign mapLayers to being rendered over or under the Player
             if (layer.getProperties().containsKey("floating") && layer.getProperties().get("floating").equals("true"))
                 renderOverPlayer.add(i);
             else

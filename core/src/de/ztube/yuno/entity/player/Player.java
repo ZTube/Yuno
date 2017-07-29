@@ -24,17 +24,25 @@ import de.ztube.yuno.screens.Game;
  * Created by ZTube on 18.07.2016.
  * Yuno
  */
+
+/**The Player sprite controlled by a touchpad*/
 public class Player extends Entity implements Damageable {
 
     private static final int totalHearts = 4;
     private final Game game;
     private WalkDirection walkDirection;
+
+    //The target tiles for tile based walking
     private int targetTileX = -1;
     private int targetTileY = -1;
 
+    //The Player's textures
     private TextureAtlas playerTexture;
     private Animation walkUp, walkDown, walkRight, walkLeft;
+    //The elapsed time needed for the walk animations
     private float elapsedTime;
+
+    //The current map
     private TiledMap map;
 
     public Player(AssetManager assets, final Game game, TiledMap map) {
@@ -42,90 +50,136 @@ public class Player extends Entity implements Damageable {
         this.game = game;
         this.map = map;
 
-
+        //Get the TextureAtlas through the AssetManager
         playerTexture = assets.get("graphics/entity/player/player.pack", TextureAtlas.class);
 
+        //Set the Player's texture and size. TODO: better way?
         set(playerTexture.createSprite("walk.down"));
 
+        //Initialize the walk animations
         walkUp = new Animation(1f / 8f, playerTexture.findRegions("walk.up"));
         walkDown = new Animation(1f / 8f, playerTexture.findRegions("walk.down"));
         walkRight = new Animation(1f / 8f, playerTexture.findRegions("walk.right"));
         walkLeft = new Animation(1f / 8f, playerTexture.findRegions("walk.left"));
 
+        //Teleports the Player to the MapObject "spawnPlayer"
         setSpawnPosition("spawnPlayer");
     }
 
+    //Returns the Player's total hearts
     public static int getTotalHearts() {
         return totalHearts;
     }
 
+    //Used to display the Sprite
     @Override
     public void draw(Batch batch) {
         super.draw(batch);
         elapsedTime += Gdx.graphics.getDeltaTime();
 
+        //UpdateMethods
         updateProperties(batch);
         updatePosition(Gdx.graphics.getDeltaTime());
         updateTexture();
     }
 
     private void updatePosition(float delta) {
+        //Old position to reset if needed
         float oldX = getX();
         float oldY = getY();
 
+        //Create Arrays of type MapObjects for doors and collision detection
         Array<MapObjects> collisionObjects = new Array<MapObjects>();
         Array<MapObject> doorObjects = new Array<MapObject>();
 
+        //Tile based walking. TODO: bugfixing / improvement
+        //No input from touchpad: Player normally stands still
         if (walkDirection == WalkDirection.STILL) {
+            //Get the map's tile width and height
             int mapTileWidth = (int) ((TiledMapTileLayer) map.getLayers().get(0)).getTileWidth();
             int mapTileHeight = (int) ((TiledMapTileLayer) map.getLayers().get(0)).getTileHeight();
 
             if (getVelocity().x != 0) {
+                //Target tile not set and Player was walking rightwards
                 if (targetTileX < 0 && getVelocity().x > 0)
+                    //Calculate the target tile in x right direction
                     targetTileX = (int) Math.floor((double) getX() / (double) mapTileWidth) + 1;
+
+                //Target tile not set and Player was walking leftwards
                 else if (targetTileX < 0 && getVelocity().x < 0)
+                    //Calculate the target tile in x left direction
                     targetTileX = (int) Math.floor((double) getX() / (double) mapTileWidth);
+
+                //Player crossed the target tile rightwards
                 else if (getX() >= targetTileX * 16 && getVelocity().x > 0) {
+                    //Stop moving
                     setVelocityX(0);
                     setX(targetTileX * 16);
+
+                    //Unset target tile
                     targetTileX = -1;
+
+                //Player crossed the target tile leftwards
                 } else if (getX() <= targetTileX * 16 && getVelocity().x < 0) {
+                    //Stop moving
                     setVelocityX(0);
                     setX(targetTileX * 16);
+
+                    //Unset target tile
                     targetTileX = -1;
                 }
             }
 
             if (getVelocity().y != 0) {
+                //Target tile not set and Player was walking upwards
                 if (targetTileY < 0 && getVelocity().y > 0)
+                    //Calculate the target tile in y up direction
                     targetTileY = (int) Math.floor((double) getY() / (double) mapTileHeight) + 1;
+
+                //Target tile not set and Player was walking downwards
                 else if (targetTileY < 0 && getVelocity().y < 0)
+                    //Calculate the target tile in y down direction
                     targetTileY = (int) Math.floor((double) getY() / (double) mapTileHeight);
+
+                //Player crossed the target tile upwards
                 else if (getY() >= targetTileY * 16 && getVelocity().y > 0) {
+                    //Stop moving
                     setVelocityY(0);
                     setY(targetTileY * 16);
+
+                    //Unset target tile
                     targetTileY = -1;
+
+                //Player crossed the target tile downwards
                 } else if (getY() <= targetTileY * 16 && getVelocity().y < 0) {
+                    //Stop moving
                     setVelocityY(0);
                     setY(targetTileY * 16);
+
+                    //Unset target tile
                     targetTileY = -1;
                 }
             }
         }
 
+        //Update the Player's position
         setX(getX() + getVelocity().x * delta);
         setY(getY() + getVelocity().y * delta);
 
+        //Iterate through all maplayers
         for (MapLayer layer : map.getLayers()) {
+
+            //If the layers' name is "collision" add all objects to the array collisionObjects
             if (layer.getName().equalsIgnoreCase("collision")) {
                 collisionObjects.add(layer.getObjects());
             }
 
-
+            //If the layers' name is "doors" add all objects to the array doorObjects
             if (layer.getName().equalsIgnoreCase("doors")) {
                 for (MapObject door : layer.getObjects()) {
                     doorObjects.add(door);
 
+                    //If the door is locked add it to collisionObjects
                     MapObjects doorObject = new MapObjects();
                     if (door.getProperties().containsKey("locked") && door.getProperties().get("locked").equals("true")) {
                         doorObject.add(door);
@@ -135,33 +189,29 @@ public class Player extends Entity implements Damageable {
             }
         }
 
-        if (collisionObjects.size != 0)
+        //Collision detection
+        for (MapObjects collisionObject : collisionObjects) {
 
-        {
+            for (RectangleMapObject rectangleObject : collisionObject.getByType(RectangleMapObject.class)) {
 
-            for (MapObjects collisionObject : collisionObjects) {
+                Rectangle rectangle = rectangleObject.getRectangle();
 
-                // there are several other types, Rectangle is probably the most common one
-                for (RectangleMapObject rectangleObject : collisionObject.getByType(RectangleMapObject.class)) {
-
-                    Rectangle rectangle = rectangleObject.getRectangle();
-                    if (getBoundingRectangle().overlaps(rectangle)) {
-                        // collision with object
-                        setX(oldX);
-                        setY(oldY);
-                    }
+                //Check if the Player's rectangle overlaps the collisionObject's rectangle
+                if (getBoundingRectangle().overlaps(rectangle)) {
+                    //Reset to old position
+                    setX(oldX);
+                    setY(oldY);
                 }
             }
         }
 
-        for (
-                MapObject door
-                : doorObjects)
-
-        {
+        //Door handling
+        for (MapObject door : doorObjects) {
+            //Checks if the door is unlocked
             if (door.getProperties().containsKey("locked") && door.getProperties().get("locked").equals("false") && door.getProperties().containsKey("door")) {
                 if (getBoundingRectangle().overlaps(((RectangleMapObject) door).getRectangle())) {
 
+                    //Set the new map to the string provided by the door
                     setCurrentMap((String) door.getProperties().get("door"));
                     return;
                 }
@@ -169,9 +219,10 @@ public class Player extends Entity implements Damageable {
         }
     }
 
+    //Update the Player's texture
     private void updateTexture() {
         if (getVelocity().x == 0 && getVelocity().y == 0) {
-            //stand still
+            //Player standing still
             if (getRegionX() == walkUp.getKeyFrame(elapsedTime, true).getRegionX() && getRegionY() == walkUp.getKeyFrame(elapsedTime, true).getRegionY()) {
                 setRegion(playerTexture.findRegion("stand.back"));
             }
@@ -188,38 +239,46 @@ public class Player extends Entity implements Damageable {
                 setRegion(playerTexture.findRegion("stand.left"));
             }
         } else if (getVelocity().x > 0 && (getVelocity().y < 0.5f || getVelocity().y > -0.5f)) {
-            //walk right
+            //Walk right animation
             setRegion(walkRight.getKeyFrame(elapsedTime, true));
         } else if (getVelocity().x < 0 && (getVelocity().y < 0.5f || getVelocity().y > -0.5f)) {
-            //walk left
+            //Walk left animation
             setRegion(walkLeft.getKeyFrame(elapsedTime, true));
         } else if (getVelocity().y > 0 && (getVelocity().x < 0.5f || getVelocity().x > -0.5f)) {
-            //walk up
+            //Walk up animation
             setRegion(walkUp.getKeyFrame(elapsedTime, true));
         } else if (getVelocity().y < 0 && (getVelocity().x < 0.5f || getVelocity().x > -0.5f)) {
-            //walk down
+            //Walk down animation
             setRegion(walkDown.getKeyFrame(elapsedTime, true));
         }
     }
 
+    //Update the Player's properties
     private void updateProperties(Batch batch) {
     }
 
+    //Called when the Player is damaged
     @Override
     public void onDamaged() {
 
     }
 
+    //Update the Player's position
     private void setSpawnPosition(String spawn) {
         MapLayer spawnObjectLayer = null;
+
+        //Get the layer with the name "Player"
         for (MapLayer layer : map.getLayers()) {
             if (layer.getName().equalsIgnoreCase("Player")) {
                 spawnObjectLayer = layer;
             }
         }
+
+        //Check if spawnObjectLayer is set and "spawn" exists
         if (spawnObjectLayer != null && spawnObjectLayer.getObjects().get(spawn) != null) {
             MapObject spawnObject = spawnObjectLayer.getObjects().get(spawn);
 
+            //Get the spawn coordinates from the spawnObject
             Float x = null;
             Float y = null;
             try {
@@ -227,17 +286,25 @@ public class Player extends Entity implements Damageable {
                 y = spawnObject.getProperties().get("y", Float.class);
 
             } catch (GdxRuntimeException e) {
+                //Problem getting the coordinates
                 throw new IllegalSpawnPositionException(x, y);
             }
 
+            //Set the new position
             setPosition(x - getWidth() / 2, y - getHeight() / 2);
+        }
+        else{
+            //Layer does not exist
+            throw new IllegalSpawnPositionException(-1f, -1f);
         }
     }
 
+    //Return the current walk direction
     public WalkDirection getWalkDirection() {
         return walkDirection;
     }
 
+    //Set the current walk direction and update the corresponding velocity
     public void setWalkDirection(WalkDirection walkDirection) {
         this.walkDirection = walkDirection;
 
@@ -266,20 +333,26 @@ public class Player extends Entity implements Damageable {
         }
     }
 
+    //Get the current map
     public TiledMap getCurrentMap() {
         return map;
     }
 
+    //Update the current map
     public void setCurrentMap(String params) {
+        //Split the String into two halfs
         String[] mapData = params.split(",");
 
+        //Get the mapName and spawnName from the array mapData and replace all spaces
         String mapName = mapData[0].replace(" ", "");
         String spawnName = mapData[1].replace(" ", "");
 
+        //if the mapName = "this" stay on the same map, else load the new map
         if (!mapName.equalsIgnoreCase("this")) {
             this.map = game.setMap("maps/" + mapName);
         }
 
+        //Teleport the Player
         setSpawnPosition(spawnName);
     }
 
@@ -288,6 +361,7 @@ public class Player extends Entity implements Damageable {
 
     }
 
+    //The different walk directions
     public enum WalkDirection {
         STILL, UP, RIGHT, DOWN, LEFT
     }

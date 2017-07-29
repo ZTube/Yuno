@@ -8,6 +8,8 @@ import aurelienribon.tweenengine.TweenAccessor;
  * Created by ZTube on 26.07.2016.
  * Yuno
  */
+
+/**The Tween SpriteAccessor used for alpha-fading*/
 public class SpriteAccessor implements TweenAccessor<Sprite> {
 
     public static final int ALPHA = 0;

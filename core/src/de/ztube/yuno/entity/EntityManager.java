@@ -1,11 +1,10 @@
-package de.ztube.yuno.entity.id;
+package de.ztube.yuno.entity;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.UUID;
 
-import de.ztube.yuno.entity.Entity;
 import de.ztube.yuno.exceptions.EntityNotFoundException;
 
 /**

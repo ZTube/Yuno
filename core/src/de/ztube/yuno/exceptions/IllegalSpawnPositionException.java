@@ -5,6 +5,7 @@ package de.ztube.yuno.exceptions;
  * Yuno
  */
 
+/**Thrown when a spawn position is invalid*/
 public class IllegalSpawnPositionException extends YunoException {
 
     public IllegalSpawnPositionException(float x, float y) {

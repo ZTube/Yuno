@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
  * Yuno
  */
 
+/**General Exception*/
 public class YunoException extends GdxRuntimeException {
 
     private static final String PREFIX = "Yuno: ";

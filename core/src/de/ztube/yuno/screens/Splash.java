@@ -32,12 +32,16 @@ import de.ztube.yuno.tween.SpriteAccessor;
  * Created by ZTube on 17.07.2016.
  * Yuno
  */
+
+/**The Splash screen*/
 public class Splash implements Screen {
 
     private final Yuno yuno;
     private SpriteBatch batch;
     private TextField credits;
     private Sprite splash;
+
+    //The BitmapFont to display the credits
     private BitmapFont splashFont;
 
     private boolean ranTween = false;
@@ -60,11 +64,14 @@ public class Splash implements Screen {
 
         tweenManager.update(delta);
 
+        //Switch to MainMenu when all assets are loaded
         if (!ranTween && yuno.assets.update()) {
             ranTween = true;
+            //Tween alpha interpolation
             Tween.to(splash, SpriteAccessor.ALPHA, 0.4f).target(0).delay(2f).setCallback(new TweenCallback() {
                 @Override
                 public void onEvent(int type, BaseTween<?> source) {
+                    //Sets the new Screen
                     yuno.setScreen(new MainMenu(yuno));
                     dispose();
                 }
@@ -75,12 +82,15 @@ public class Splash implements Screen {
     @Override
     public void show() {
         batch = new SpriteBatch();
+
+        //Load the splash background texture
         splash = new Sprite(new Texture("graphics/ui/splash/splash.jpg"));
         splash.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         tweenManager = new TweenManager();
         Tween.registerAccessor(Sprite.class, new SpriteAccessor());
 
+        //Load the ttf font
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/splash.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         float multiplier = (float) Gdx.graphics.getHeight() / 1280f;
@@ -88,8 +98,9 @@ public class Splash implements Screen {
         parameter.borderColor = Color.BLACK;
         parameter.borderWidth = Math.round(1f * (multiplier < 1f ? 1f : multiplier + 0.6f));
 
-        splashFont = generator.generateFont(parameter); // font size 12 pixels
-        generator.dispose(); // don't forget to dispose to avoid memory leaks!
+        splashFont = generator.generateFont(parameter);
+        //Dispose the generator
+        generator.dispose();
 
 
         Integer date = Calendar.getInstance().get(Calendar.YEAR);
@@ -113,6 +124,7 @@ public class Splash implements Screen {
         Gdx.app.log("Yuno", "loaded Splash");
     }
 
+    //Load the graphical assets
     private void loadGraphics() {
         yuno.assets.load("graphics/entity/player/player.pack", TextureAtlas.class);
         yuno.assets.load("graphics/ui/game/icons.pack", TextureAtlas.class);
@@ -127,6 +139,7 @@ public class Splash implements Screen {
         }
     }
 
+    //Load the soundfiles
     private void loadSounds() {
         for (FileHandle file : Gdx.files.internal("audio/music/menu/").list()) {
             if (!file.isDirectory())
@@ -138,6 +151,7 @@ public class Splash implements Screen {
         }
     }
 
+    //Load the maps
     private void loadMaps() {
         yuno.assets.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
 

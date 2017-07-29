@@ -5,6 +5,7 @@ package de.ztube.yuno.entity;
  * Yuno
  */
 
+/**Interface that handles damage*/
 public interface Damageable {
     void onDamaged();
 }

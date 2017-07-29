@@ -5,5 +5,6 @@ package de.ztube.yuno.exceptions;
  * Yuno
  */
 
+/**Called when an Entity was not found in the EntityManager*/
 public class EntityNotFoundException extends YunoException {
 }

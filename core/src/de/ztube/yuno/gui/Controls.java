@@ -15,19 +15,27 @@ import de.ztube.yuno.entity.player.Player;
  * Created by ZTube on 18.07.2016.
  * Yuno
  */
+
+/**The Class handling the touchpad's input*/
 public class Controls extends Actor {
 
     private final AssetManager assets;
+
+    //The Touchpad and style
     private Touchpad touchpad;
     private Touchpad.TouchpadStyle touchpadStyle;
     private Skin touchpadSkin;
     private Drawable touchBackground, touchKnob;
+
+    //The Player
     private Player player;
 
 
     public Controls(AssetManager assets, Player player) {
         this.assets = assets;
         this.player = player;
+
+        //Initialize the touchpad and set its style
         touchpadSkin = new Skin();
         touchpadSkin.add("touchBackground", new Texture("graphics/ui/game/touchpad2.png"));
 
@@ -54,6 +62,7 @@ public class Controls extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
 
+        //Updates the Players walkDirection
         if (touchpad.getKnobPercentX() > 0.7f) {
             player.setWalkDirection(Player.WalkDirection.RIGHT);
             //Log.v("YunoControls", "right");
@@ -70,6 +79,7 @@ public class Controls extends Actor {
             player.setWalkDirection(Player.WalkDirection.STILL);
         }
 
+        //Sets the touchpad's alpha
         Color color = getColor();
         batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
 

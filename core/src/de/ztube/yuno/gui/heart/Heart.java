@@ -13,8 +13,14 @@ import de.ztube.yuno.exceptions.IllegalHeartStateException;
  * Created by ZTube on 18.07.2016.
  * Yuno
  */
+
+/**Represents a Heart in the GUI*/
 public class Heart extends Sprite implements Disposable {
+
+    //The current HeartState
     private HeartState currentState = HeartState.FULL;
+
+    //The textures
     private Array<Sprite> heartTextures;
 
     public Heart(AssetManager assets) {
@@ -27,7 +33,7 @@ public class Heart extends Sprite implements Disposable {
         heartTextures = heartTexture.createSprites();
         heartTextures.reverse();
 
-        //setTexture(heartTexture.getTextures().first());
+        //Set the Players texture and size. TODO: better way?
         set(heartTextures.get(state.getTextureId()));
         Gdx.app.log("Yuno", "Heart created");
 
@@ -35,6 +41,7 @@ public class Heart extends Sprite implements Disposable {
         updateTexture();
     }
 
+    //Update the heart's texture
     private void updateTexture() {
 
         if (currentState == HeartState.FULL) {
@@ -51,10 +58,12 @@ public class Heart extends Sprite implements Disposable {
         }
     }
 
+    //Returns the HeartState
     public HeartState getState() {
         return currentState;
     }
 
+    //Sets the HeartState
     public void setState(HeartState state) {
         currentState = state;
         updateTexture();
@@ -68,6 +77,7 @@ public class Heart extends Sprite implements Disposable {
         }
     }
 
+    //List of the different HeartStates
     public enum HeartState {
         EMPTY(0),
         HALF(1),
