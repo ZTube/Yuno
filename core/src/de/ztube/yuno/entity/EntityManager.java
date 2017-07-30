@@ -11,19 +11,25 @@ import de.ztube.yuno.exceptions.EntityNotFoundException;
  * Created by ZTube on 29.07.2017.
  * Yuno
  */
+
+/**Singleton for managing all Entitys*/
 public class EntityManager implements Iterable<Entity>, Comparator<Entity> {
 
     private static EntityManager instance = new EntityManager();
+
+    //The Entity ArrayList
     private ArrayList<Entity> entities;
 
     private EntityManager() {
         entities = new ArrayList<Entity>();
     }
 
+    //The Singleton instance
     public static EntityManager getInstance() {
         return instance;
     }
 
+    //Add an Entity to the List
     public void createEntity(Entity entity) {
         if (entity == null)
             throw new NullPointerException();
@@ -31,6 +37,7 @@ public class EntityManager implements Iterable<Entity>, Comparator<Entity> {
         entities.add(entity);
     }
 
+    //Get the Entity with given UUID
     public Entity getEntity(UUID uuid) {
         for (Entity entity : this) {
             if (entity.getUUID().equals(uuid))
@@ -39,10 +46,13 @@ public class EntityManager implements Iterable<Entity>, Comparator<Entity> {
         throw new EntityNotFoundException();
     }
 
+    //Remove the Entity with given UUID
     public void destroyEntity(UUID uuid) {
         for (Entity entity : this) {
-            if (entity.getUUID().equals(uuid))
+            if (entity.getUUID().equals(uuid)) {
                 entities.remove(entity);
+                entity.dispose();
+            }
         }
     }
 

@@ -14,6 +14,7 @@ public class SpriteAccessor implements TweenAccessor<Sprite> {
 
     public static final int ALPHA = 0;
 
+    //Get the Sprite's alpha
     @Override
     public int getValues(Sprite target, int tweenType, float[] returnValues) {
         switch (tweenType) {
@@ -26,6 +27,7 @@ public class SpriteAccessor implements TweenAccessor<Sprite> {
         }
     }
 
+    //Set the Sprite's alpha
     @Override
     public void setValues(Sprite target, int tweenType, float[] newValues) {
         switch (tweenType) {

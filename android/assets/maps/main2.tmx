@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="32" tilewidth="16" tileheight="16" nextobjectid="121">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="32" tilewidth="16" tileheight="16" nextobjectid="126">
  <tileset firstgid="1" name="tileset-shinygold" tilewidth="16" tileheight="16" tilecount="2048" columns="8">
   <image source="../graphics/tilesets/tileset.png" width="128" height="4096"/>
  </tileset>
@@ -15,22 +15,22 @@
  </layer>
  <layer name="Terrain" width="32" height="32">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2WO08CQRCAlygkV1hAYgGJnUYLX4UPfL8KX42FRn+RrZ0YCzQWaqFCoeAjwVeioAn6k5wJs2FY9+4GchoTmeQLl2Vvv5nlbgelmvGXYjFsZwmIwPfHwEmdnAJRwBH4b4BbgztgLVxZ4wLIMArAvQcPQBZIADGB/xF4Msaeya8s/heXnHXeReCK7YPEj/HGeGf154A8cM78+h5b3peqdh/8okS+DfBtMrbClT3EiLF94H4dPG+9T0Whn/sw8JlJWOahv0Brl1ycHKlf+7DGKI210njc8JdV5Xd4ZZwBR4wPYB/4FPolgfnlyF0mhwY9tvozAfjRq/cEzwLzXfAjqPoxWlT1XeD7nffgWrDuGDAEDAPjxrUbOGdeMM+GGXO01m9hxjKwEgCTtP6Uz7yfCr2PCw3ca+tT5hnksPEUsEPsufjxPNkV+nEe9tn1kD/YUw6Y/9DFj3luC9wpWgPf7RAjyq4TbMyWj5s/LfCnWe3oGAFGgSTz9wMDFgZV9Ywx/XiGS/q/otp1vdzfTe5OGjNJevjjdL9fOKp277W/i2rk7hmiV+CvJ9Cvf2Pt5/QBsy45BuXXz9e0qtap4W7st7wH6DO+UX+b+v7sm+g+iNdYr9kzbD0BrycE/nZV+x+Pv29IzMgjq7x7Bj9/VwX+DvrsYXn49VSvnoFOh4gI/M34X/EF/5nCYwAQAAA=
+   H4sIAAAAAAAAC+2WOU9CQRCAlygkFBaQWEBip9HCq/DAW7Hwaiw0+ots7cRYoLFQCxUKBY8Er0RBE/QnORNmw7Ds8gYD0UQm+cLLsm+/meW9HZRqxV+KJb+dZSAA358Ap3VyBoSAoMB/C9wZ3APr/tIal0CKkQMeavAIpIEoEBb4n4BnY+yF/Mrif3XkrPPOA9dsHyR+jHfGB6s/A2SBC+bX99jyvlKV++AVBfJtgm+Lse0v7SFGmO0D9+vgeet9ygv93IeBz0zUMg/9OVq74HBypH7twxpDNNZO4xHDX1Sl3+GNcQ4cMz6BA+BL6JcE5pchd5EcGvTY6k81wI9evSd4FpjvgheNqh+jTZXfBb7f2RrcWNaZtDACjFquXeCcuGCejfgvs9okpmn9GY95zYoF8i/+4F5bnzLPoCAbTwC7xL7Dj+fJntCP87DPbvi8wZ5yyPxHDj/muSNwJ2gNfLd9jBC7jrIxWz4uf1LgT7La0TEGjAMx5h8EhiwMq/IZY/rxDJf0f0W163q5v5fc3TRmEqvhj9D9XhFUlXuv/T1UI3fPEf0Cfz2Bfv0baz9nAJh35Ngov36+ZlW5Tg13Y7/lPUCf8T/1d6jqZ99E90G8xnonVHWfMHsCXk8J/J2q8j8ef9+QsJFHmtVqg5+/awJ/F332sTy8euqKcp/v6AwSAYG/Ff8rvgEACgCRABAAAA==
   </data>
  </layer>
  <layer name="Trees" width="32" height="32">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+NnYGAQAGL+AaLFgVhiAGl098gDsQINaUL+pzUg5H9ag1H/j/p/1P8j1//o5SG9/Y8O6O1/dDDS/M8OxBxI9EhL/yM9/4/6f9T/o/4fvP5HL5+pTQ/2/t9I6/8CALbVJjsAEAAA
+   H4sIAAAAAAAAC+NnYGAQAGL+AaLFgVhiAGl098gDsQINaUL+pzUg5H9ag1H/j/p/1P+Dx//o5ROtAb3tGwX4ATsQcyDR9LZvoNP/SM//o/4f9f+o/0f9D6PRy2dq04O9/zfS+r8A2rVkZQAQAAA=
   </data>
  </layer>
  <layer name="Houses" width="32" height="32">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2VuQoCMRQAsz/vfd8neIKlv6JWaqVWaqVWauOkCASxUAzJFm9gimzxJpCFp5QgCEJ8uEdKPfAZ+W8naCYxZanPA093KdApYslSn2cO+wtmLXH1YWaDb01sWerz3GF/zawNbgO8r2ZHd4+HQP0j3ROeA/UvdK94C9T/ljT3y2AWc5j3fN8yvQpWsYZ1z/02vQ52sYd9z/0hvRGOcYLTmP8vccXsFF875B2zU1zukF8wO8XlDhEE4X9e5i58JwAQAAA=
+   H4sIAAAAAAAAC+3VPXMBQQCH8XWFqFCFSlSoEp/SS4h38iJmgphR+iqRKlSoUGRQZNDkueFmrjPY27li/zO/Yq+454qbWSH09PT03LOtR4gd9h7nW15DiBv4jMM5RTONjI15/nDoW/x0Awge+wU6RZRszHNfYv+Ldw3xjVu6IYSP/QbPnvFiY54HEvs/vGuEMSJ07xA15L3/1CZ0p5ghRjeOBH4V/G/m5nQWWOKe7gOS+FPUX9FZY6Ood+myfN8jcsjjSfH3lulVUEUNdcX9V3pvaOIdLcX9Nr0OuvhEz+X/i1tn3SlO3SGnZt0pMu+Qc2bdKTLvED09vev3Dylb4QYAEAAA
   </data>
  </layer>
  <layer name="Fence" width="32" height="32">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NgGAWDCdThwC1ArM44cO7qBGKXUftHtP0+QPvtBsgNE4G4iWFgw6BrhNvfDcT6A2j/KKA9aGTAXQcRi1vQzGxGkiMEeij2AaSsQgZdVDBzsNhfDsRleDA17S/BIlZLhD5q2d9Apj50+7sH2H5yASH7YWlhoOyvxyFOjTwMAjUM+NM6MWlxFIyCUYAbAACZeu0kABAAAA==
+   H4sIAAAAAAAAC2NgGAWDCdThwC1ArM44cO7qBGKXUftHtP0+QPvtBsgNE4G4iWFgw6BrhNvfDcT6A2g/tUDLANvfOcD29+CRa2TAXQcRi9HDtxlJjhK3EQvQw7eLCmYOFvvLgbgMD6am/SVYxGqJ0Ect+xvI1Iduf/cA208uIGQ/LC0MlP31OMSpkYdBoIYBf1onJi2OglEwCnADAAjd9lgAEAAA
   </data>
  </layer>
  <objectgroup color="#ff0000" name="Collision">
@@ -39,7 +39,6 @@
   </properties>
   <object id="4" x="0" y="0" width="512" height="48"/>
   <object id="5" x="0" y="448" width="512" height="64"/>
-  <object id="6" x="0" y="48" width="64" height="400"/>
   <object id="7" x="448" y="48" width="64" height="160"/>
   <object id="8" x="448" y="256" width="64" height="192"/>
   <object id="9" x="400" y="256" width="16" height="96"/>
@@ -108,6 +107,9 @@
   <object id="116" x="416" y="80" width="16"/>
   <object id="117" x="304" y="96" width="16" height="16"/>
   <object id="118" x="400" y="96" width="16"/>
+  <object id="122" x="464" y="208" width="8" height="48"/>
+  <object id="123" x="0" y="48" width="64" height="160"/>
+  <object id="124" x="0" y="256" width="64" height="192"/>
  </objectgroup>
  <objectgroup color="#ffff00" name="Doors">
   <object id="85" name="house1 left" x="80" y="192" width="16" height="4">
@@ -134,7 +136,7 @@
     <property name="locked" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="90" name="main" x="476" y="208" width="4" height="48">
+  <object id="90" name="main" x="46" y="208" width="4" height="48">
    <properties>
     <property name="door" value="main.tmx,spawn1"/>
     <property name="locked" type="bool" value="false"/>
@@ -160,7 +162,7 @@
   </object>
  </objectgroup>
  <objectgroup color="#00ffff" name="Player">
-  <object id="94" name="spawn1" x="468" y="232"/>
+  <object id="94" name="spawn1" x="64" y="232"/>
   <object id="103" name="spawnHouse2Garden" x="424" y="328"/>
   <object id="106" name="spawnHouse2" x="424" y="408"/>
   <object id="107" name="spawnHouse1Left" x="88" y="216"/>

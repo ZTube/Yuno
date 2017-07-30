@@ -78,18 +78,25 @@ public abstract class Entity extends Sprite implements Disposable, Comparable<En
     @Override
     public int compareTo(Entity entity) {
         //TODO: compare names instead of the UUID
-        return getUUID().compareTo(entity.getUUID());
+        return uuid.compareTo(entity.getUUID());
     }
 
     @Override
     public boolean equals(Object obj) {
-        //If the UUIDs are the same, the entities are equal
-        return getUUID().equals(obj);
+        //Two Entities are equal if the UUIDs are equal
+        return uuid.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        //TODO: hash name
+        return uuid.hashCode();
     }
 
     @Override
     public String toString() {
         //Returns the UUID
-        return getUUID().toString();
+        //TODO: return name + uuid
+        return uuid.toString();
     }
 }
