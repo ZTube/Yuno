@@ -1,0 +1,26 @@
+* text=auto
+
+*.java text diff=java
+*.gradle text
+*.properties text
+*.tmx text
+*.xml text
+*.txt text
+*.vsh text
+*.fsh text
+*.pack text
+
+.gitignore text
+.gitattributes text
+
+gradlew text=eol
+*.bat text=crlf
+
+*.ttf binary
+*.jar binary
+*.jpg binary
+*.png binary
+*.wav binary
+*.mp3 binary
+
+*.so binary
