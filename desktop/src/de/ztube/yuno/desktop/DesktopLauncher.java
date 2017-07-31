@@ -7,10 +7,14 @@ import de.ztube.yuno.Yuno;
 
 public class DesktopLauncher {
     public static void main(String[] arg) {
+
+        //DesktopLauncher for testing purposes only
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-        config.fullscreen = true;
+        config.fullscreen = false;
         config.title = "Yuno";
         config.useGL30 = true;
+
+        //Window should be resizable for testing
         config.resizable = true;
         new LwjglApplication(new Yuno(), config);
     }
