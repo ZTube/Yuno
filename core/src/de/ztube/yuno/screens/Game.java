@@ -97,14 +97,14 @@ public class Game implements Screen {
         renderer.render(renderOverPlayer.toArray());
 
         //Draw the GUI
-        gui.draw(delta);
+        gui.act();
+        gui.draw();
     }
 
     @Override
     public void show() {
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
-        //camera.setToOrtho(false, Yuno.SCREEN_WIDTH, Yuno.SCREEN_HEIGHT);
         viewport = new FitViewport(Yuno.SCREEN_WIDTH, Yuno.SCREEN_HEIGHT, camera);
 
 
@@ -115,6 +115,8 @@ public class Game implements Screen {
         player = new Player(assets, this, map);
 
         gui = new GUI(assets, player);
+        //Set the InputProcessor to GUI
+        Gdx.input.setInputProcessor(gui);
 
         ShaderProgram.pedantic = false;
 
@@ -208,6 +210,7 @@ public class Game implements Screen {
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
+        gui.getViewport().update(width, height);
     }
 
     @Override
