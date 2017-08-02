@@ -18,7 +18,7 @@ public abstract class Entity extends Sprite implements Disposable, Comparable<En
     //The AssetManager used to load assets
     protected final AssetManager assets;
 
-    //The players velocity used for movement
+    //The Entity's velocity used for movement
     private final Vector2 velocity;
 
     //The Unique Identification
@@ -42,6 +42,11 @@ public abstract class Entity extends Sprite implements Disposable, Comparable<En
     //Returns the Entity's lifes
     public final int getLifes() {
         return lifes;
+    }
+
+    //Returns the Entity's name based on the class name
+    public String getName(){
+        return getClass().getSimpleName();
     }
 
     //Returns the UUID
@@ -77,26 +82,26 @@ public abstract class Entity extends Sprite implements Disposable, Comparable<En
     //Compare to another Entity
     @Override
     public int compareTo(Entity entity) {
-        //TODO: compare names instead of the UUID
-        return uuid.compareTo(entity.getUUID());
+        return getName().compareTo(entity.getName()) + uuid.compareTo(entity.getUUID());
     }
 
     @Override
     public boolean equals(Object obj) {
-        //Two Entities are equal if the UUIDs are equal
-        return uuid.equals(obj);
+        //Two Entities are equal if the names and UUIDs are equal
+        return getName().equals(obj) && uuid.equals(obj);
     }
 
     @Override
     public int hashCode() {
-        //TODO: hash name
-        return uuid.hashCode();
+        int tmpHash = 17;
+        tmpHash = 31 * tmpHash + getName().hashCode();
+        tmpHash = 31 * tmpHash + getUUID().hashCode();
+        return tmpHash;
     }
 
     @Override
     public String toString() {
-        //Returns the UUID
-        //TODO: return name + uuid
-        return uuid.toString();
+        //Returns the Name:UUID
+        return String.format("%s:%s", getName(), uuid.toString());
     }
 }
