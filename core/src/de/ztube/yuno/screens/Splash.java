@@ -10,14 +10,17 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.Calendar;
 
@@ -26,7 +29,7 @@ import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenManager;
 import de.ztube.yuno.Yuno;
-import de.ztube.yuno.tween.SpriteAccessor;
+import de.ztube.yuno.tween.ActorAccessor;
 
 /**
  * Created by ZTube on 17.07.2016.
@@ -37,9 +40,10 @@ import de.ztube.yuno.tween.SpriteAccessor;
 public class Splash implements Screen {
 
     private final Yuno yuno;
-    private SpriteBatch batch;
+
+    private Stage stage;
     private TextField credits;
-    private Sprite splash;
+    private Image splash;
 
     //The BitmapFont to display the credits
     private BitmapFont splashFont;
@@ -57,18 +61,16 @@ public class Splash implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        batch.begin();
-        splash.draw(batch);
-        credits.draw(batch, splash.getColor().a);
-        batch.end();
-
         tweenManager.update(delta);
 
+        stage.act(delta);
+        stage.draw();
+
         //Switch to MainMenu when all assets are loaded
-        if (!ranTween && yuno.assets.update()) {
+        if (yuno.assets.update() && !ranTween) {
             ranTween = true;
             //Tween alpha interpolation
-            Tween.to(splash, SpriteAccessor.ALPHA, 0.4f).target(0).delay(2f).setCallback(new TweenCallback() {
+            Tween.to(splash, ActorAccessor.ALPHA, 0.4f).target(0).delay(2f).setCallback(new TweenCallback() {
                 @Override
                 public void onEvent(int type, BaseTween<?> source) {
                     //Sets the new Screen
@@ -76,27 +78,26 @@ public class Splash implements Screen {
                     dispose();
                 }
             }).start(tweenManager);
+            Tween.to(credits, ActorAccessor.ALPHA, 0.4f).target(0).delay(2f).start(tweenManager);
         }
     }
 
     @Override
     public void show() {
-        batch = new SpriteBatch();
+        Viewport viewport = new FitViewport(Yuno.SCREEN_WIDTH, Yuno.SCREEN_HEIGHT);
+
+        stage = new Stage(viewport);
 
         //Load the splash background texture
-        splash = new Sprite(new Texture("graphics/ui/splash/splash.jpg"));
-        splash.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
-        tweenManager = new TweenManager();
-        Tween.registerAccessor(Sprite.class, new SpriteAccessor());
+        splash = new Image(new Texture("graphics/ui/splash/splash.jpg"));
+        splash.setFillParent(true);
 
         //Load the ttf font
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/splash.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        float multiplier = (float) Gdx.graphics.getHeight() / 1280f;
-        parameter.size = Math.round(128f * multiplier);
+        parameter.size = 20;
         parameter.borderColor = Color.BLACK;
-        parameter.borderWidth = Math.round(1f * (multiplier < 1f ? 1f : multiplier + 0.6f));
+        parameter.borderWidth = 1f;
 
         splashFont = generator.generateFont(parameter);
         //Dispose the generator
@@ -109,13 +110,22 @@ public class Splash implements Screen {
         style.font = splashFont;
         style.fontColor = Color.WHITE;
 
-
         credits = new TextField(String.format("©ZTube %d", date), style);
         credits.setAlignment(Align.center);
-        credits.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        credits.setSize(Yuno.SCREEN_WIDTH, Yuno.SCREEN_HEIGHT);
 
-        Tween.set(splash, SpriteAccessor.ALPHA).target(0).start(tweenManager);
-        Tween.to(splash, SpriteAccessor.ALPHA, 1f).target(1).delay(1f).start(tweenManager);
+        tweenManager = new TweenManager();
+        Tween.registerAccessor(Actor.class, new ActorAccessor());
+
+        Tween.set(splash, ActorAccessor.ALPHA).target(0).start(tweenManager);
+        Tween.to(splash, ActorAccessor.ALPHA, 1f).target(1).delay(1f).start(tweenManager);
+
+        Tween.set(credits, ActorAccessor.ALPHA).target(0).start(tweenManager);
+        Tween.to(credits, ActorAccessor.ALPHA, 1f).target(1).delay(1f).start(tweenManager);
+
+        stage.addActor(splash);
+        stage.addActor(credits);
+
 
         yuno.assets.clear();
         loadGraphics();
@@ -161,6 +171,7 @@ public class Splash implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        stage.getViewport().update(width, height);
     }
 
     @Override
@@ -180,7 +191,6 @@ public class Splash implements Screen {
 
     @Override
     public void dispose() {
-        batch.dispose();
-        splash.getTexture().dispose();
+        stage.dispose();
     }
 }

@@ -1,6 +1,6 @@
 package de.ztube.yuno.tween;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import aurelienribon.tweenengine.TweenAccessor;
 
@@ -9,14 +9,14 @@ import aurelienribon.tweenengine.TweenAccessor;
  * Yuno
  */
 
-/**The Tween SpriteAccessor used for alpha-fading*/
-public class SpriteAccessor implements TweenAccessor<Sprite> {
+/**The Tween ActorAccessor used for alpha-fading*/
+public class ActorAccessor implements TweenAccessor<Actor> {
 
     public static final int ALPHA = 0;
 
     //Get the Sprite's alpha
     @Override
-    public int getValues(Sprite target, int tweenType, float[] returnValues) {
+    public int getValues(Actor target, int tweenType, float[] returnValues) {
         switch (tweenType) {
             case ALPHA:
                 returnValues[0] = target.getColor().a;
@@ -29,7 +29,7 @@ public class SpriteAccessor implements TweenAccessor<Sprite> {
 
     //Set the Sprite's alpha
     @Override
-    public void setValues(Sprite target, int tweenType, float[] newValues) {
+    public void setValues(Actor target, int tweenType, float[] newValues) {
         switch (tweenType) {
             case ALPHA:
                 target.setColor(target.getColor().r, target.getColor().g, target.getColor().b, newValues[0]);

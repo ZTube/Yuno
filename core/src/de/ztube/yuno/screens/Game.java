@@ -14,6 +14,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.IntArray;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -38,6 +40,9 @@ public class Game implements Screen {
 
     //The camera
     private OrthographicCamera camera;
+
+    //The viewport
+    private Viewport viewport;
 
     //The current map and renderer
     private TiledMap map;
@@ -99,7 +104,8 @@ public class Game implements Screen {
     public void show() {
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, Yuno.SCREEN_WIDTH, Yuno.SCREEN_HEIGHT);
+        //camera.setToOrtho(false, Yuno.SCREEN_WIDTH, Yuno.SCREEN_HEIGHT);
+        viewport = new FitViewport(Yuno.SCREEN_WIDTH, Yuno.SCREEN_HEIGHT, camera);
 
 
         camera.update();
@@ -201,7 +207,7 @@ public class Game implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        viewport.update(width, height);
     }
 
     @Override
