@@ -19,7 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.Calendar;
@@ -84,7 +84,7 @@ public class Splash implements Screen {
 
     @Override
     public void show() {
-        Viewport viewport = new FitViewport(Yuno.SCREEN_WIDTH, Yuno.SCREEN_HEIGHT);
+        Viewport viewport = new FillViewport(Yuno.SCREEN_WIDTH, Yuno.SCREEN_HEIGHT);
 
         stage = new Stage(viewport);
 
