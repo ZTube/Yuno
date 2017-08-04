@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 
 import de.ztube.yuno.screens.Splash;
+import de.ztube.yuno.screens.utils.ScreenManager;
 
 /**
  * Created by ZTube on 17.07.2016.
@@ -19,13 +20,16 @@ public class Yuno extends Game {
     public static final int SCREEN_HEIGHT = 160;
 
     //The AssetManager used for caching assets to load them quicker
-    public AssetManager assets;
+    public static AssetManager assets;
+    public static ScreenManager screens;
 
     @Override
     public void create() {
         //Initialize the AssetManager and start the Splashscreen
         assets = new AssetManager();
-        setScreen(new Splash(this));
+        screens = new ScreenManager(this);
+
+        screens.setScreen(new Splash());
 
         Gdx.app.log("Yuno", "loaded Yuno");
     }

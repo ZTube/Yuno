@@ -2,7 +2,6 @@ package de.ztube.yuno.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -33,8 +32,6 @@ import de.ztube.yuno.gui.GUI;
 /**The main Game class*/
 public class Game implements Screen {
 
-    private final AssetManager assets;
-
     //The SpriteBatch
     private SpriteBatch batch;
 
@@ -64,8 +61,8 @@ public class Game implements Screen {
     private IntArray renderOverPlayer = new IntArray();
     private IntArray renderUnderPlayer = new IntArray();
 
-    public Game(AssetManager assets) {
-        this.assets = assets;
+    public Game() {
+
     }
 
     @Override
@@ -112,9 +109,9 @@ public class Game implements Screen {
 
         setMap("maps/main.tmx");
 
-        player = new Player(assets, this, map);
+        player = new Player(this, map);
 
-        gui = new GUI(assets, player);
+        gui = new GUI(player);
         //Set the InputProcessor to GUI
         Gdx.input.setInputProcessor(gui);
 
@@ -181,7 +178,7 @@ public class Game implements Screen {
 
     //Update the map returning itself
     public TiledMap setMap(String mapPath) {
-        map = assets.get(mapPath, TiledMap.class);
+        map = Yuno.assets.get(mapPath, TiledMap.class);
 
         mapWidth = ((TiledMapTileLayer) map.getLayers().get(0)).getWidth();
         mapHeight = ((TiledMapTileLayer) map.getLayers().get(0)).getHeight();

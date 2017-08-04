@@ -1,6 +1,5 @@
 package de.ztube.yuno.gui.heart;
 
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -16,16 +15,14 @@ import de.ztube.yuno.Yuno;
 
 /**The HeartContainer manages the Hearts and displays them in a row*/
 public class HeartContainer extends Actor implements Disposable {
-    private final AssetManager assets;
     private Array<Heart> hearts;
 
-    public HeartContainer(AssetManager assets, int heartCount) {
-        this.assets = assets;
+    public HeartContainer(int heartCount) {
 
         hearts = new Array<Heart>(heartCount);
 
         for (int i = 0; i < heartCount; i++) {
-            hearts.add(new Heart(assets));
+            hearts.add(new Heart());
         }
         for (int i = 0; i < hearts.size; i++) {
             hearts.get(i).setPosition(i * hearts.get(i).getWidth(), Yuno.SCREEN_HEIGHT - hearts.get(i).getHeight());
@@ -40,7 +37,7 @@ public class HeartContainer extends Actor implements Disposable {
     //Add new Hearts
     public void addHeart(int count) {
         for (int i = 0; i <= count; i++) {
-            hearts.add(new Heart(assets, Heart.HeartState.EMPTY));
+            hearts.add(new Heart(Heart.HeartState.EMPTY));
         }
 
         for (int i = 0; i < hearts.size; i++) {

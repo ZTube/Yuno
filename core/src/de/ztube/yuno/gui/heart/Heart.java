@@ -1,12 +1,12 @@
 package de.ztube.yuno.gui.heart;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 
+import de.ztube.yuno.Yuno;
 import de.ztube.yuno.exceptions.IllegalHeartStateException;
 
 /**
@@ -23,12 +23,12 @@ public class Heart extends Sprite implements Disposable {
     //The textures
     private Array<Sprite> heartTextures;
 
-    public Heart(AssetManager assets) {
-        this(assets, HeartState.FULL);
+    public Heart() {
+        this(HeartState.FULL);
     }
 
-    public Heart(AssetManager assets, HeartState state) {
-        TextureAtlas heartTexture = assets.get("graphics/ui/game/icons.pack", TextureAtlas.class);
+    public Heart(HeartState state) {
+        TextureAtlas heartTexture = Yuno.assets.get("graphics/ui/game/icons.pack", TextureAtlas.class);
         heartTextures = new Array<Sprite>(2);
         heartTextures = heartTexture.createSprites();
         heartTextures.reverse();

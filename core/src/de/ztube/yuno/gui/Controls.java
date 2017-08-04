@@ -1,6 +1,5 @@
 package de.ztube.yuno.gui;
 
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -19,8 +18,6 @@ import de.ztube.yuno.entity.player.Player;
 /**The Class handling the touchpad's input*/
 public class Controls extends Actor {
 
-    private final AssetManager assets;
-
     //The Touchpad and style
     private Touchpad touchpad;
     private Touchpad.TouchpadStyle touchpadStyle;
@@ -31,8 +28,7 @@ public class Controls extends Actor {
     private Player player;
 
 
-    public Controls(AssetManager assets, Player player) {
-        this.assets = assets;
+    public Controls(Player player) {
         this.player = player;
 
         //Initialize the touchpad and set its style

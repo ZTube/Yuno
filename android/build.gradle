@@ -1,6 +1,6 @@
 android {
     buildToolsVersion "24.0.1"
-    compileSdkVersion 24
+    compileSdkVersion 23
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -17,7 +17,7 @@ android {
     defaultConfig {
         applicationId "de.ztube.yuno"
         minSdkVersion 10
-        targetSdkVersion 24
+        targetSdkVersion 23
         versionName 'early snapshot'
     }
     productFlavors {

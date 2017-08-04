@@ -14,10 +14,8 @@ import de.ztube.yuno.Yuno;
 /**The main Menu*/ //TODO: recreate
 public class MainMenu implements Screen {
 
-    private final Yuno yuno;
+    public MainMenu() {
 
-    public MainMenu(Yuno yuno) {
-        this.yuno = yuno;
     }
 
     @Override
@@ -28,7 +26,7 @@ public class MainMenu implements Screen {
 
     @Override
     public void show() {
-        yuno.setScreen(new Game(yuno.assets));
+        Yuno.screens.setScreen(new Game());
         Gdx.app.log("Yuno", "loaded MainMenu");
     }
 

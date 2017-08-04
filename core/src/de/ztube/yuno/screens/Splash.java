@@ -39,8 +39,6 @@ import de.ztube.yuno.tween.ActorAccessor;
 /**The Splash screen*/
 public class Splash implements Screen {
 
-    private final Yuno yuno;
-
     private Stage stage;
     private TextField credits;
     private Image splash;
@@ -52,8 +50,8 @@ public class Splash implements Screen {
 
     private TweenManager tweenManager;
 
-    public Splash(final Yuno yuno) {
-        this.yuno = yuno;
+    public Splash() {
+
     }
 
     @Override
@@ -67,14 +65,14 @@ public class Splash implements Screen {
         stage.draw();
 
         //Switch to MainMenu when all assets are loaded
-        if (yuno.assets.update() && !ranTween) {
+        if (Yuno.assets.update() && !ranTween) {
             ranTween = true;
             //Tween alpha interpolation
             Tween.to(splash, ActorAccessor.ALPHA, 0.4f).target(0).delay(2f).setCallback(new TweenCallback() {
                 @Override
                 public void onEvent(int type, BaseTween<?> source) {
                     //Sets the new Screen
-                    yuno.setScreen(new MainMenu(yuno));
+                    Yuno.screens.setScreen(new MainMenu());
                     dispose();
                 }
             }).start(tweenManager);
@@ -127,7 +125,7 @@ public class Splash implements Screen {
         stage.addActor(credits);
 
 
-        yuno.assets.clear();
+        Yuno.assets.clear();
         loadGraphics();
         loadSounds();
         loadMaps();
@@ -136,16 +134,16 @@ public class Splash implements Screen {
 
     //Load the graphical assets
     private void loadGraphics() {
-        yuno.assets.load("graphics/entity/player/player.pack", TextureAtlas.class);
-        yuno.assets.load("graphics/ui/game/icons.pack", TextureAtlas.class);
+        Yuno.assets.load("graphics/entity/player/player.pack", TextureAtlas.class);
+        Yuno.assets.load("graphics/ui/game/icons.pack", TextureAtlas.class);
         for (FileHandle file : Gdx.files.internal("graphics/ui/menu/backgrounds/").list()) {
             if (!file.isDirectory())
-                yuno.assets.load(file.path(), Texture.class);
+                Yuno.assets.load(file.path(), Texture.class);
         }
 
         for (FileHandle file : Gdx.files.internal("graphics/ui/menu/backgrounds/addons/").list()) {
             if (!file.isDirectory())
-                yuno.assets.load(file.path(), Texture.class);
+                Yuno.assets.load(file.path(), Texture.class);
         }
     }
 
@@ -153,20 +151,20 @@ public class Splash implements Screen {
     private void loadSounds() {
         for (FileHandle file : Gdx.files.internal("audio/music/menu/").list()) {
             if (!file.isDirectory())
-                yuno.assets.load(file.path(), Music.class);
+                Yuno.assets.load(file.path(), Music.class);
         }
         for (FileHandle file : Gdx.files.internal("audio/fx/").list()) {
             if (!file.isDirectory())
-                yuno.assets.load(file.path(), Sound.class);
+                Yuno.assets.load(file.path(), Sound.class);
         }
     }
 
     //Load the maps
     private void loadMaps() {
-        yuno.assets.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
+        Yuno.assets.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
 
-        yuno.assets.load("maps/main.tmx", TiledMap.class);
-        yuno.assets.load("maps/main2.tmx", TiledMap.class);
+        Yuno.assets.load("maps/main.tmx", TiledMap.class);
+        Yuno.assets.load("maps/main2.tmx", TiledMap.class);
     }
 
     @Override

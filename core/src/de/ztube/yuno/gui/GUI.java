@@ -1,6 +1,5 @@
 package de.ztube.yuno.gui;
 
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -15,7 +14,6 @@ import de.ztube.yuno.gui.heart.HeartContainer;
 
 /**The whole GUI as a child of Stage*/
 public class GUI extends Stage {
-    private final AssetManager assets;
 
     //The HeartContainer
     private HeartContainer container;
@@ -25,21 +23,20 @@ public class GUI extends Stage {
 
     private Player player;
 
-    public GUI(AssetManager assets, Player player) {
+    public GUI(Player player) {
         super(new FitViewport(Yuno.SCREEN_WIDTH, Yuno.SCREEN_HEIGHT));
 
-        this.assets = assets;
         this.player = player;
 
         //create a new HeartContainer
-        container = new HeartContainer(assets, Player.getTotalHearts());
+        container = new HeartContainer(Player.getTotalHearts());
 
         //Some tests. TODO: remove later
         container.damage(7);
         container.heal(3);
 
         //Initialize the touchpad
-        controls = new Controls(assets, player);
+        controls = new Controls(player);
 
         //Add touchpad and HeartContainer to the stage
         addActor(controls);

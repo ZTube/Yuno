@@ -1,6 +1,5 @@
 package de.ztube.yuno.entity;
 
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
@@ -15,9 +14,6 @@ import java.util.UUID;
 /**Abstract class with base functionality for all Entities*/
 public abstract class Entity extends Sprite implements Disposable, Comparable<Entity> {
 
-    //The AssetManager used to load assets
-    protected final AssetManager assets;
-
     //The Entity's velocity used for movement
     private final Vector2 velocity;
 
@@ -30,9 +26,7 @@ public abstract class Entity extends Sprite implements Disposable, Comparable<En
     //The movement speed
     private float speed = 60f * 1f;
 
-    public Entity(AssetManager assets) {
-        this.assets = assets;
-
+    public Entity() {
         velocity = new Vector2(0, 0);
 
         //Generate a new random UUID

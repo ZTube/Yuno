@@ -1,7 +1,6 @@
 package de.ztube.yuno.entity.player;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -15,6 +14,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
+import de.ztube.yuno.Yuno;
 import de.ztube.yuno.entity.Damageable;
 import de.ztube.yuno.entity.Entity;
 import de.ztube.yuno.exceptions.IllegalSpawnPositionException;
@@ -45,13 +45,12 @@ public class Player extends Entity implements Damageable {
     //The current map
     private TiledMap map;
 
-    public Player(AssetManager assets, final Game game, TiledMap map) {
-        super(assets);
+    public Player(final Game game, TiledMap map) {
         this.game = game;
         this.map = map;
 
         //Get the TextureAtlas through the AssetManager
-        playerTexture = assets.get("graphics/entity/player/player.pack", TextureAtlas.class);
+        playerTexture = Yuno.assets.get("graphics/entity/player/player.pack", TextureAtlas.class);
 
         //Set the Player's texture and size. TODO: better way?
         set(playerTexture.createSprite("walk.down"));
