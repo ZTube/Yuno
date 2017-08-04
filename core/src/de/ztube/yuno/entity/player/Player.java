@@ -11,6 +11,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
@@ -32,9 +33,8 @@ public class Player extends Entity implements Damageable {
     private final Game game;
     private WalkDirection walkDirection;
 
-    //The target tiles for tile based walking
-    private int targetTileX = -1;
-    private int targetTileY = -1;
+    //The target tile coordinates for tile based walking
+    private Vector2 targetTile;
 
     //The Player's textures
     private TextureAtlas playerTexture;
@@ -60,6 +60,9 @@ public class Player extends Entity implements Damageable {
         walkDown = new Animation(1f / 8f, playerTexture.findRegions("walk.down"));
         walkRight = new Animation(1f / 8f, playerTexture.findRegions("walk.right"));
         walkLeft = new Animation(1f / 8f, playerTexture.findRegions("walk.left"));
+
+        targetTile = new Vector2(-1, -1);
+        walkDirection = WalkDirection.STILL;
 
         //Teleports the Player to the MapObject "spawnPlayer"
         setSpawnPosition("spawnPlayer");
@@ -92,73 +95,30 @@ public class Player extends Entity implements Damageable {
         Array<MapObject> doorObjects = new Array<MapObject>();
 
         //Tile based walking. TODO: bugfixing / improvement
-        //No input from touchpad: Player normally stands still
-        if (walkDirection == WalkDirection.STILL) {
-            //Get the map's tile width and height
-            int mapTileWidth = (int) ((TiledMapTileLayer) map.getLayers().get(0)).getTileWidth();
-            int mapTileHeight = (int) ((TiledMapTileLayer) map.getLayers().get(0)).getTileHeight();
+        //Get the map's tile width and height
+        int mapTileWidth = (int) ((TiledMapTileLayer) map.getLayers().get(0)).getTileWidth();
+        int mapTileHeight = (int) ((TiledMapTileLayer) map.getLayers().get(0)).getTileHeight();
 
-            if (getVelocity().x != 0) {
-                //Target tile not set and Player was walking rightwards
-                if (targetTileX < 0 && getVelocity().x > 0)
-                    //Calculate the target tile in x right direction
-                    targetTileX = (int) Math.floor((double) getX() / (double) mapTileWidth) + 1;
-
-                //Target tile not set and Player was walking leftwards
-                else if (targetTileX < 0 && getVelocity().x < 0)
-                    //Calculate the target tile in x left direction
-                    targetTileX = (int) Math.floor((double) getX() / (double) mapTileWidth);
-
-                //Player crossed the target tile rightwards
-                else if (getX() >= targetTileX * 16 && getVelocity().x > 0) {
-                    //Stop moving
-                    setVelocityX(0);
-                    setX(targetTileX * 16);
-
-                    //Unset target tile
-                    targetTileX = -1;
-
-                //Player crossed the target tile leftwards
-                } else if (getX() <= targetTileX * 16 && getVelocity().x < 0) {
-                    //Stop moving
-                    setVelocityX(0);
-                    setX(targetTileX * 16);
-
-                    //Unset target tile
-                    targetTileX = -1;
-                }
-            }
-
-            if (getVelocity().y != 0) {
-                //Target tile not set and Player was walking upwards
-                if (targetTileY < 0 && getVelocity().y > 0)
-                    //Calculate the target tile in y up direction
-                    targetTileY = (int) Math.floor((double) getY() / (double) mapTileHeight) + 1;
-
-                //Target tile not set and Player was walking downwards
-                else if (targetTileY < 0 && getVelocity().y < 0)
-                    //Calculate the target tile in y down direction
-                    targetTileY = (int) Math.floor((double) getY() / (double) mapTileHeight);
-
-                //Player crossed the target tile upwards
-                else if (getY() >= targetTileY * 16 && getVelocity().y > 0) {
-                    //Stop moving
-                    setVelocityY(0);
-                    setY(targetTileY * 16);
-
-                    //Unset target tile
-                    targetTileY = -1;
-
-                //Player crossed the target tile downwards
-                } else if (getY() <= targetTileY * 16 && getVelocity().y < 0) {
-                    //Stop moving
-                    setVelocityY(0);
-                    setY(targetTileY * 16);
-
-                    //Unset target tile
-                    targetTileY = -1;
-                }
-            }
+        switch(walkDirection){
+            case STILL:
+                setVelocity(0, 0);
+                break;
+            case UP:
+                setVelocity(0, getSpeed());
+                targetTile.y = (int)Math.floor((double) getY() / (double) mapTileHeight) + 1;
+                break;
+            case DOWN:
+                setVelocity(0, -getSpeed());
+                targetTile.y = (int)Math.floor((double) getY() / (double) mapTileHeight);
+                break;
+            case RIGHT:
+                setVelocity(getSpeed(), 0);
+                targetTile.x = (int)Math.floor((double) getY() / (double) mapTileWidth) + 1;
+                break;
+            case LEFT:
+                setVelocity(-getSpeed(), 0);
+                targetTile.x = (int)Math.floor((double) getY() / (double) mapTileWidth);
+                break;
         }
 
         //Update the Player's position
@@ -290,6 +250,8 @@ public class Player extends Entity implements Damageable {
             }
 
             //Set the new position
+            targetTile.x = -1;
+            targetTile.y = -1;
             setPosition(x - getWidth() / 2, y - getHeight() / 2);
         }
         else{
@@ -306,30 +268,6 @@ public class Player extends Entity implements Damageable {
     //Set the current walk direction and update the corresponding velocity
     public void setWalkDirection(WalkDirection walkDirection) {
         this.walkDirection = walkDirection;
-
-        switch (walkDirection) {
-            case STILL:
-                //Do Nothing
-                break;
-            case UP:
-                setVelocityY(getSpeed());
-                setVelocityX(0);
-                break;
-            case DOWN:
-                setVelocityY(-getSpeed());
-                setVelocityX(0);
-                break;
-            case RIGHT:
-                setVelocityY(0);
-                setVelocityX(getSpeed());
-                break;
-            case LEFT:
-                setVelocityY(0);
-                setVelocityX(-getSpeed());
-                break;
-            default:
-                throw new IllegalArgumentException();
-        }
     }
 
     //Get the current map
@@ -362,6 +300,6 @@ public class Player extends Entity implements Damageable {
 
     //The different walk directions
     public enum WalkDirection {
-        STILL, UP, RIGHT, DOWN, LEFT
+        STILL, UP, DOWN, RIGHT, LEFT
     }
 }
