@@ -99,26 +99,66 @@ public class Player extends Entity implements Damageable {
         int mapTileWidth = (int) ((TiledMapTileLayer) map.getLayers().get(0)).getTileWidth();
         int mapTileHeight = (int) ((TiledMapTileLayer) map.getLayers().get(0)).getTileHeight();
 
+        //Set the target tile coordinates based on the walking direction
         switch(walkDirection){
             case STILL:
-                setVelocity(0, 0);
                 break;
             case UP:
-                setVelocity(0, getSpeed());
-                targetTile.y = (int)Math.floor((double) getY() / (double) mapTileHeight) + 1;
+                targetTile.y = ((int)Math.floor(getY() / mapTileHeight) + 1) * mapTileHeight;
                 break;
             case DOWN:
-                setVelocity(0, -getSpeed());
-                targetTile.y = (int)Math.floor((double) getY() / (double) mapTileHeight);
+                targetTile.y = ((int)Math.ceil(getY() / mapTileHeight) - 1) * mapTileHeight;
                 break;
             case RIGHT:
-                setVelocity(getSpeed(), 0);
-                targetTile.x = (int)Math.floor((double) getY() / (double) mapTileWidth) + 1;
+                targetTile.x = ((int)Math.floor(getX() / mapTileWidth) + 1) * mapTileWidth;
                 break;
             case LEFT:
-                setVelocity(-getSpeed(), 0);
-                targetTile.x = (int)Math.floor((double) getY() / (double) mapTileWidth);
+                targetTile.x = ((int)Math.ceil(getX() / mapTileWidth) -1) * mapTileWidth;
                 break;
+        }
+
+        //Target tile x is set
+        if(targetTile.x != -1){
+            //Checks if the Player reached the target tile x coordinate
+            if(targetTile.x > getX() && targetTile.x - getX() > 1){
+                //Walk right
+                setVelocityX(getSpeed());
+            }
+            //Checks if the Player reached the target tile x coordinate
+            else if(targetTile.x < getX() && getX() - targetTile.x > 1){
+                //Walk left
+                setVelocityX(-getSpeed());
+            }
+            //Player reached the tile
+            else{
+                //Stop walking
+                setVelocityX(0);
+                //Set the players x position to the tile's x coordinate
+                setX(targetTile.x);
+                //Unset the target tile x
+                targetTile.x = -1;
+            }
+        }
+        //Target tile y is set
+        if(targetTile.y != -1){
+            //Checks if the Player reached the target tile y coordinate
+            if(targetTile.y > getY() && targetTile.y - getY() > 1){
+                //Walk up
+                setVelocityY(getSpeed());
+            }
+            //Checks if the Player reached the target tile y coordinate
+            else if(targetTile.y < getY() && getY() - targetTile.y > 1){
+                //Walk down
+                setVelocityY(-getSpeed());
+            }
+            else{
+                //Stop walking
+                setVelocityY(0);
+                //Set the players y position to the tile's y coordinate
+                setY(targetTile.y);
+                //Unset the target tile y
+                targetTile.y = -1;
+            }
         }
 
         //Update the Player's position

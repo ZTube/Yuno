@@ -50,17 +50,18 @@ public abstract class Entity extends Sprite implements Disposable, Comparable<En
 
     //Sets the velocity in x direction
     protected void setVelocityX(float x) {
-        velocity.set(x, velocity.y);
+        velocity.x = x;
     }
 
     //Sets the velocity in y direction
     protected void setVelocityY(float y) {
-        velocity.set(velocity.x, y);
+        velocity.y = y;
     }
 
     //Sets the velocity
     protected void setVelocity(float x, float y) {
-        velocity.set(x, y);
+        velocity.x = x;
+        velocity.y = y;
     }
 
     //Returns the velocity
