@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
@@ -38,7 +39,7 @@ public class Player extends Entity implements Damageable {
 
     //The Player's textures
     private TextureAtlas playerTexture;
-    private Animation walkUp, walkDown, walkRight, walkLeft;
+    private Animation<TextureRegion> walkUp, walkDown, walkRight, walkLeft;
     //The elapsed time needed for the walk animations
     private float elapsedTime;
 
@@ -56,10 +57,10 @@ public class Player extends Entity implements Damageable {
         set(playerTexture.createSprite("walk.down"));
 
         //Initialize the walk animations
-        walkUp = new Animation(1f / 8f, playerTexture.findRegions("walk.up"));
-        walkDown = new Animation(1f / 8f, playerTexture.findRegions("walk.down"));
-        walkRight = new Animation(1f / 8f, playerTexture.findRegions("walk.right"));
-        walkLeft = new Animation(1f / 8f, playerTexture.findRegions("walk.left"));
+        walkUp = new Animation<TextureRegion>(1f / 8f, playerTexture.findRegions("walk.up"));
+        walkDown = new Animation<TextureRegion>(1f / 8f, playerTexture.findRegions("walk.down"));
+        walkRight = new Animation<TextureRegion>(1f / 8f, playerTexture.findRegions("walk.right"));
+        walkLeft = new Animation<TextureRegion>(1f / 8f, playerTexture.findRegions("walk.left"));
 
         targetTile = new Vector2(-1, -1);
         walkDirection = WalkDirection.STILL;
