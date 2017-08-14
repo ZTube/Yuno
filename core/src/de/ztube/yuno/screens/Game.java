@@ -222,7 +222,7 @@ public class Game implements Screen {
 
     @Override
     public void hide() {
-
+        dispose();
     }
 
     @Override
