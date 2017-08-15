@@ -207,6 +207,9 @@ public class Game implements Screen {
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
+        shader.begin();
+        shader.setUniformf("u_resolution", width, height);
+        shader.end();
         gui.getViewport().update(width, height);
     }
 
