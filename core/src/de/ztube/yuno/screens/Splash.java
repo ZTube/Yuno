@@ -73,7 +73,6 @@ public class Splash implements Screen {
                 public void onEvent(int type, BaseTween<?> source) {
                     //Sets the new Screen
                     Yuno.screens.setScreen(new MainMenu());
-                    dispose();
                 }
             }).start(tweenManager);
             Tween.to(credits, ActorAccessor.ALPHA, 0.4f).target(0).delay(2f).start(tweenManager);
