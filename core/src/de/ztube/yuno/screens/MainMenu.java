@@ -26,8 +26,8 @@ public class MainMenu implements Screen {
 
     @Override
     public void show() {
-        Yuno.screens.setScreen(new Game());
         Gdx.app.log("Yuno", "loaded MainMenu");
+        Yuno.screens.setScreen(new Game());
     }
 
     @Override

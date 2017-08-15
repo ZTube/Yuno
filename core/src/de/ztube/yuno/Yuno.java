@@ -29,9 +29,8 @@ public class Yuno extends Game {
         assets = new AssetManager();
         screens = new ScreenManager(this);
 
-        screens.setScreen(new Splash());
-
         Gdx.app.log("Yuno", "loaded Yuno");
+        screens.setScreen(new Splash());
     }
 
     @Override
