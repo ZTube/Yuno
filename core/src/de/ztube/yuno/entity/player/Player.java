@@ -208,7 +208,7 @@ public class Player extends Entity implements Damageable {
         //Door handling
         for (MapObject door : doorObjects) {
             //Checks if the door is unlocked
-            if (door.getProperties().containsKey("locked") && door.getProperties().get("locked").equals("false") && door.getProperties().containsKey("door")) {
+            if (door.getProperties().containsKey("locked") && !((Boolean) door.getProperties().get("locked")) && door.getProperties().containsKey("door")) {
                 if (getBoundingRectangle().overlaps(((RectangleMapObject) door).getRectangle())) {
 
                     //Set the new map to the string provided by the door
