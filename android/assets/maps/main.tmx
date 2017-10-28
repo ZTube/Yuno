@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="16" tileheight="16" nextobjectid="428">
+<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="16" tileheight="16" nextobjectid="428">
  <tileset firstgid="1" name="shinygold" tilewidth="16" tileheight="16" tilecount="2048" columns="8">
   <image source="../graphics/tilesets/tileset.png" width="128" height="4096"/>
   <terraintypes>
@@ -149,7 +149,7 @@
  </layer>
  <layer name="Floor" width="64" height="64">
   <data encoding="base64" compression="zlib">
-   eJztmcFOwzAMhoM4VMCD8RZsp22nwQHKZYONC4ydticmlmYRRd3WpE2d1P8nWTusTfwrruM4xsixtfYRaF8inqZhF/HOb+9eyKFd/8GEx/T+zPPvvXgkQ+ia8vOkuT7ZuleP4riNfG/f8jnOgUcjr/nxRnBycJGSc0ETbb8rzgc55IKhGCIH5vita1xrQqtugrRr1M18SjvQgT5ySMn6306/rx3G+HbGKQ3ynfLWT4cxqA4oOQZCoDh5sjZxbGrGr5/3N4qTmbW5YwvzH0e1lIOJ4f2N1t/X/1BJeTU8K2t3lV79hKR+d7+Wqv9LWP8u+/k1StC/STh2Lvov9R9WCefNRb8U0A/9vv5Szz8xNOkfe/3v0qRfS/+H6gpf/0LWpUGhfbXp/KeJpbVnx14SzuXX+Dn2/GPvVwFoA/fbpsJ+SMH5VludydB+e19BP/RLeyID9EO/Zv1cb6esswEAAAAAXELvksd2F0I939oztyfj/zf2uwDqd3JPRlvvm9GuP+czCfrxwAcxAUA5/AFIlVLE
+   eJztmc9uwjAMxjNxqDYejLfYOG2cGAfWXdjfywachsT7EktYi6KONWlTJ/X3kywOTVN/inEcxxg5Pqy9BtqniKdp2Ea8s+vdCzm06/8x4TG9/2P8cy8eyRC6pjyeNNdne+nVozgmke/tW47jHHgw8ppnV4IfBxcpORc0cWw5jvNBDrlgKIbIgTn+1zWuNaFVN0HaNepm3qQd6EAfOaRk/U/n33WHOb6ceUqDfKe89d1hDqqvS46BEChObq3dOTY349fP+xvFyb21B8cW5jeOaikHE8P7G62/r39aSXk1PBtr15Ve/YSkfne/lqr/S1j/Lvv5f5Sg/z3h3Lnov9TX2yT8bi76pYB+6Pf1l3r+iaFJ/9jrf5cm/Vr6P1RX+PoXsi4NCu2rTec/TSytPTq2Svgtv8bPsecfe78KQBu43zYX9kMKzrfa6kyG9tubCvqhX9oTGaAf+jXr53o7ZZ0NAAAAAOASepc8trsQ6vnWnrk9Gf/Z2O8CqN/JPRltvW9Gu/6czyToxwMfxAQA5XAC3N5TVg==
   </data>
  </layer>
  <layer name="Floating_Floor" width="64" height="64">
@@ -157,7 +157,7 @@
    <property name="floating" type="bool" value="true"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt1rENACAMAzC4ipH/v2KtWBBTBbUvCENJWgO4M3p2glyz+Pupw61nJ4C3+UOyEwDAWezrit0d+1p3AwDwm33jV9v8+8a3+QEAAAAAAAB4yQIBngNJ
+   eJzt1rENwCAQA0AyVcpMyM5pEQ1Kg0X+bgFMAXZrAN/cVzpB1lP8/uzTw+d76+kEcDZ/SDoBAKyNfV2xu8e+1t0AAPzNvPGrbf5549v8AAAAAAAAAJzkBQ4bA9Y=
   </data>
  </layer>
  <layer name="Trees" width="64" height="64">
@@ -562,7 +562,7 @@
  <objectgroup color="#ffff00" name="Doors">
   <object id="401" name="house1" x="624" y="96" width="16" height="4">
    <properties>
-    <property name="door" value="this,spawnHouse1Garden"/>
+    <property name="door" value="house1.tmx,spawn1"/>
     <property name="locked" type="bool" value="false"/>
    </properties>
   </object>

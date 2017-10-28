@@ -164,6 +164,7 @@ public class Splash implements Screen {
 
         Yuno.assets.load("maps/main.tmx", TiledMap.class);
         Yuno.assets.load("maps/main2.tmx", TiledMap.class);
+        Yuno.assets.load("maps/house1.tmx", TiledMap.class);
     }
 
     @Override

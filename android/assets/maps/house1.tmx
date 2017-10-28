@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="32" height="8" tilewidth="16" tileheight="16" nextobjectid="16">
+ <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16" tilecount="2048" columns="8">
+  <image source="../graphics/tilesets/tileset.png" width="128" height="4096"/>
+ </tileset>
+ <layer name="Ground" width="32" height="8">
+  <data encoding="base64" compression="zlib">
+   eJzTZWRg0B3Fo3gUj0gMAGRkLgE=
+  </data>
+ </layer>
+ <layer name="Floor" width="32" height="8">
+  <data encoding="base64" compression="zlib">
+   eJyzYWRgsKUBVgBiEJBHE9vJxsCwHYh3APEuIHaBqqMmYCYgvx9o7wEgtmGkjf3EAheo/Z5A7AXE3nR2C8z+QCAOAuLgAbI/EoijgDh6gOxPBOIkIE4eAPt9gNiXRIyct0jVi4z9gBgAVwQbGQ==
+  </data>
+ </layer>
+ <objectgroup color="#00ffff" name="Player">
+  <object id="14" name="spawn1" x="232" y="108"/>
+  <object id="15" name="spawn2" x="376" y="16"/>
+ </objectgroup>
+ <objectgroup color="#ff0000" name="Collision">
+  <object id="1" x="0" y="0" width="364" height="16"/>
+  <object id="4" x="388" y="0" width="124" height="16"/>
+  <object id="5" x="496" y="16" width="16" height="112"/>
+  <object id="6" x="0" y="16" width="16" height="112"/>
+  <object id="8" x="16" y="116" width="204" height="12"/>
+  <object id="9" x="244" y="116" width="252" height="12"/>
+ </objectgroup>
+ <objectgroup color="#ffff00" name="Doors">
+  <object id="11" name="main1" x="220" y="124" width="24" height="4">
+   <properties>
+    <property name="door" value="main1.tmx,spawnHouse1"/>
+   </properties>
+  </object>
+  <object id="12" name="main1" x="364" y="0" width="24" height="4"/>
+ </objectgroup>
+</map>
