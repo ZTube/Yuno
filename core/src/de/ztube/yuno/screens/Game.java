@@ -195,7 +195,7 @@ public class Game implements Screen {
             MapLayer layer = map.getLayers().get(i);
 
             //assign mapLayers to being rendered over or under the Player
-            if (layer.getProperties().containsKey("floating") && layer.getProperties().get("floating").equals("true"))
+            if (layer.getProperties().containsKey("floating") && (Boolean)layer.getProperties().get("floating"))
                 renderOverPlayer.add(i);
             else
                 renderUnderPlayer.add(i);
