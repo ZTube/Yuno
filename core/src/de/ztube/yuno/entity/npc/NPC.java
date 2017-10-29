@@ -22,6 +22,32 @@ public class NPC extends Entity implements Damageable {
     }
 
     @Override
+    public void walkUp() {
+
+    }
+
+    @Override
+    public void walkDown() {
+
+    }
+
+    @Override
+    public void walkRight() {
+
+    }
+
+    @Override
+    public void walkLeft() {
+
+    }
+
+    @Override
+    public void standStill() {
+
+    }
+
+
+    @Override
     public void dispose() {
 
     }

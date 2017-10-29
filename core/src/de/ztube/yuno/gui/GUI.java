@@ -44,7 +44,7 @@ public class GUI extends Stage {
         rootTable = new Table();
         rootTable.setFillParent(true);
         addActor(rootTable);
-        rootTable.setDebug(true);
+        //rootTable.setDebug(true);
 
 
         rootTable.add(container).expand().top().padTop(2);

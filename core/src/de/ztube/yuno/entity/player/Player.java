@@ -307,8 +307,29 @@ public class Player extends Entity implements Damageable {
     }
 
     //Set the current walk direction and update the corresponding velocity
-    public void setWalkDirection(WalkDirection walkDirection) {
-        this.walkDirection = walkDirection;
+    @Override
+    public void walkUp() {
+        this.walkDirection = WalkDirection.UP;
+    }
+
+    @Override
+    public void walkDown() {
+        this.walkDirection = WalkDirection.DOWN;
+    }
+
+    @Override
+    public void walkRight() {
+        this.walkDirection = WalkDirection.RIGHT;
+    }
+
+    @Override
+    public void walkLeft() {
+        this.walkDirection = WalkDirection.LEFT;
+    }
+
+    @Override
+    public void standStill() {
+        this.walkDirection = WalkDirection.STILL;
     }
 
     //Get the current map

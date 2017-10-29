@@ -12,7 +12,7 @@ import java.util.UUID;
  */
 
 /**Abstract class with base functionality for all Entities*/
-public abstract class Entity extends Sprite implements Disposable, Comparable<Entity> {
+public abstract class Entity extends Sprite implements Disposable, Comparable<Entity>, Controllable {
 
     //The Entity's velocity used for movement
     private final Vector2 velocity;
