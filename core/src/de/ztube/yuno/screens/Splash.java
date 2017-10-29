@@ -17,6 +17,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FillViewport;
@@ -133,6 +134,7 @@ public class Splash implements Screen {
 
     //Load the graphical assets
     private void loadGraphics() {
+        Yuno.assets.load("graphics/ui/game/skin.json", Skin.class);
         Yuno.assets.load("graphics/entity/player/player.pack", TextureAtlas.class);
         Yuno.assets.load("graphics/ui/game/icons.pack", TextureAtlas.class);
         for (FileHandle file : Gdx.files.internal("graphics/ui/menu/backgrounds/").list()) {

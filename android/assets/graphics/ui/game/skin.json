@@ -1,0 +1,8 @@
+{
+com.badlogic.gdx.scenes.scene2d.ui.Touchpad$TouchpadStyle: {
+	default: {
+		background: touchpad
+		knob: touchknob
+	}
+}
+}

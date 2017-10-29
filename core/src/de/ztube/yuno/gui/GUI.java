@@ -1,6 +1,8 @@
 package de.ztube.yuno.gui;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import de.ztube.yuno.Yuno;
@@ -19,35 +21,34 @@ public class GUI extends Stage {
     private HeartContainer container;
 
     //The touchpad
-    private Controls controls;
+    private Touchpad touchpad;
 
-    private Player player;
+    private Table rootTable;
 
     public GUI(Player player) {
         super(new FitViewport(Yuno.SCREEN_WIDTH, Yuno.SCREEN_HEIGHT));
 
-        this.player = player;
+        Skin skin = Yuno.assets.get("graphics/ui/game/skin.json", Skin.class);
 
         //create a new HeartContainer
-        container = new HeartContainer(Player.getTotalHearts());
+        container = new HeartContainer(3);
 
         //Some tests. TODO: remove later
-        container.damage(7);
-        container.heal(3);
+        //container.damage(7);
+        //container.heal(3);
 
         //Initialize the touchpad
-        controls = new Controls(player);
+        touchpad = new Touchpad(player, skin);
 
         //Add touchpad and HeartContainer to the stage
-        addActor(controls);
-        addActor(container);
-    }
+        rootTable = new Table();
+        rootTable.setFillParent(true);
+        addActor(rootTable);
+        rootTable.setDebug(true);
 
-    @Override
-    public void dispose() {
-        super.dispose();
-        container.dispose();
-        controls.dispose();
-    }
 
+        rootTable.add(container).expand().top().padTop(2);
+        rootTable.row();
+        rootTable.add(touchpad).bottom().left().padLeft(2).padBottom(2);
+    }
 }

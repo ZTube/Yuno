@@ -1,12 +1,8 @@
 package de.ztube.yuno.gui.heart;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 
-import de.ztube.yuno.Yuno;
+import java.util.Stack;
 
 /**
  * Created by ZTube on 18.07.2016.
@@ -14,66 +10,39 @@ import de.ztube.yuno.Yuno;
  */
 
 /**The HeartContainer manages the Hearts and displays them in a row*/
-public class HeartContainer extends Actor implements Disposable {
-    private Array<Heart> hearts;
+public class HeartContainer extends HorizontalGroup{
+    private Stack<Heart> hearts;
 
-    public HeartContainer(int heartCount) {
-
-        hearts = new Array<Heart>(heartCount);
-
-        for (int i = 0; i < heartCount; i++) {
-            hearts.add(new Heart());
-        }
-        for (int i = 0; i < hearts.size; i++) {
-            hearts.get(i).setPosition(i * hearts.get(i).getWidth(), Yuno.SCREEN_HEIGHT - hearts.get(i).getHeight());
-        }
-        int width = getContainerWidth();
-        for (Heart heart : hearts) {
-            heart.setX(heart.getX() + Yuno.SCREEN_WIDTH / 2 - width / 2);
+    public HeartContainer(int heartCount){
+        hearts = new Stack<Heart>();
+        for(int i = 0; i < heartCount; i++){
+            Heart heart = new Heart();
+            hearts.push(heart);
+            addActor(heart);
         }
 
     }
 
-    //Add new Hearts
     public void addHeart(int count) {
         for (int i = 0; i <= count; i++) {
-            hearts.add(new Heart(Heart.HeartState.EMPTY));
-        }
-
-        for (int i = 0; i < hearts.size; i++) {
-            hearts.get(i).setPosition(i * hearts.get(i).getWidth(), Yuno.SCREEN_HEIGHT - hearts.get(i).getHeight());
-        }
-
-        int width = getContainerWidth();
-
-        for (Heart heart : hearts) {
-            heart.setX(heart.getX() + Yuno.SCREEN_WIDTH / 2 - width / 2);
+            Heart heart = new Heart(Heart.HeartState.EMPTY);
+            hearts.push(heart);
+            addActor(heart);
         }
     }
 
-    //Remove a Heart
     public void removeHeart(int count) {
         for (int i = 0; i <= count; i++) {
-            hearts.pop().dispose();
-        }
-
-        for (int i = 0; i < hearts.size; i++) {
-            hearts.get(i).setPosition(i * hearts.get(i).getWidth(), Yuno.SCREEN_HEIGHT - hearts.get(i).getHeight());
-        }
-
-        int width = getContainerWidth();
-
-        for (Heart heart : hearts) {
-            heart.setX(heart.getX() + Yuno.SCREEN_WIDTH / 2 - width / 2);
+            removeActor(hearts.pop());
         }
     }
 
-    //Add one Heart
+    //Add one heart
     public void addHeart() {
         addHeart(1);
     }
 
-    //Remove one Heart
+    //Remove one heart
     public void removeHeart() {
         removeHeart(1);
     }
@@ -81,9 +50,9 @@ public class HeartContainer extends Actor implements Disposable {
     //Damage by int lifes
     public void damage(int lifes) {
         int damage = lifes;
-        hearts.reverse();
 
-        for (Heart heart : hearts) {
+        for (int i = hearts.size() - 1; i >= 0; i--) {
+            Heart heart = hearts.get(i);
             if (damage >= 2) {
                 if (heart.getState() == Heart.HeartState.FULL) {
                     heart.setState(Heart.HeartState.EMPTY);
@@ -106,7 +75,6 @@ public class HeartContainer extends Actor implements Disposable {
                 //do nothing
             }
         }
-        hearts.reverse();
     }
 
     //Heal lifes
@@ -148,11 +116,6 @@ public class HeartContainer extends Actor implements Disposable {
         damage(getLifes());
     }
 
-    //Returns the with of the Actor
-    public int getContainerWidth() {
-        return Math.round(hearts.peek().getX() + hearts.peek().getWidth() - hearts.first().getX());
-    }
-
     //Returns the current lifes
     public int getLifes() {
         int lifes = 0;
@@ -169,27 +132,10 @@ public class HeartContainer extends Actor implements Disposable {
     //Returns the total lifes
     public int getTotalLifes() {
         int lifes = 0;
-        for (int i = 0; i < hearts.size; i++) {
+        for (int i = 0; i < hearts.size(); i++) {
             lifes += 2;
         }
         return lifes;
-    }
-
-    @Override
-    public void dispose() {
-        for (Heart heart : hearts) {
-            heart.dispose();
-        }
-    }
-
-    //Render the hearts
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        Color color = getColor();
-        batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
-        for (Heart heart : hearts) {
-            heart.draw(batch);
-        }
     }
 }
 
