@@ -28,14 +28,14 @@ public class GUI extends Stage {
     public GUI(Player player) {
         super(new FitViewport(Yuno.SCREEN_WIDTH, Yuno.SCREEN_HEIGHT));
 
-        Skin skin = Yuno.assets.get("graphics/ui/game/skin.json", Skin.class);
+        Skin skin = Yuno.assets.get("graphics/ui/skin.json", Skin.class);
 
         //create a new HeartContainer
-        container = new HeartContainer(3);
+        container = new HeartContainer(8, skin);
 
         //Some tests. TODO: remove later
-        //container.damage(7);
-        //container.heal(3);
+        container.damage(7);
+        container.heal(3);
 
         //Initialize the touchpad
         touchpad = new Touchpad(player, skin);

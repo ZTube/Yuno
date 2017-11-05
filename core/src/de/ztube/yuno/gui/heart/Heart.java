@@ -1,13 +1,11 @@
 package de.ztube.yuno.gui.heart;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
-import de.ztube.yuno.Yuno;
+import static de.ztube.yuno.gui.heart.Heart.HeartState.FULL;
 
 /**
  * Created by ZTube on 18.07.2016.
@@ -20,18 +18,32 @@ public class Heart extends Image {
     //The current HeartState
     private HeartState currentState;
 
-    //The textures
-    private Array<Sprite> heartTextures;
+    //The style
+    private HeartStyle style;
 
-    public Heart() {
-        this(HeartState.FULL);
+
+    public Heart(Skin skin) {
+        this(FULL, skin);
     }
 
-    public Heart(HeartState state) {
-        TextureAtlas heartTextureAtlas = Yuno.assets.get("graphics/ui/game/icons.pack", TextureAtlas.class);
-        heartTextures = new Array<Sprite>(2);
-        heartTextures = heartTextureAtlas.createSprites();
-        heartTextures.reverse();
+    public Heart(HeartState state, Skin skin) {
+        this(state, skin.get(HeartStyle.class));
+    }
+
+    public Heart(Skin skin, String styleName) {
+        this(FULL, skin.get(styleName, HeartStyle.class));
+    }
+
+    public Heart(HeartState state, Skin skin, String styleName) {
+        this(state, skin.get(styleName, HeartStyle.class));
+    }
+
+    public Heart(HeartStyle style) {
+        this(FULL, style);
+    }
+
+    public Heart(HeartState state, HeartStyle style) {
+        this.style = style;
 
         setState(state);
 
@@ -49,24 +61,36 @@ public class Heart extends Image {
     public void setState(HeartState state) {
         currentState = state;
 
-        setDrawable(new SpriteDrawable(heartTextures.get(state.getTextureId())));
-        setSize(heartTextures.get(state.getTextureId()).getWidth(), heartTextures.get(state.getTextureId()).getHeight());
+
+        switch (currentState){
+            case FULL:
+                setDrawable(style.full);
+                break;
+            case HALF:
+                setDrawable(style.half);
+                break;
+            case EMPTY:
+                setDrawable(style.empty);
+                break;
+        }
+    }
+
+    public static class HeartStyle{
+        public Drawable empty, half, full;
+
+        public HeartStyle(){
+
+        }
+
+        public HeartStyle(Drawable empty, Drawable half, Drawable full){
+            this.empty = empty;
+            this.half = half;
+            this.full = full;
+        }
     }
 
     //List of the different HeartStates
     public enum HeartState {
-        EMPTY(0),
-        HALF(1),
-        FULL(2);
-
-        private final int textureId;
-
-        HeartState(int textureId) {
-            this.textureId = textureId;
-        }
-
-        public int getTextureId() {
-            return textureId;
-        }
+        EMPTY, HALF, FULL
     }
 }

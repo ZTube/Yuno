@@ -1,0 +1,25 @@
+{
+com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+	default: {
+		up: button_up
+		down: button_down
+		over: button_over
+		checked: button_checked
+		checkedOver: button_checkedOver
+		disabled: button_disabled
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Touchpad$TouchpadStyle: {
+	default: {
+		background: touch_background
+		knob: touch_knob
+	}
+}
+de.ztube.yuno.gui.heart.Heart$HeartStyle: {
+	default: {
+		full: heart_full
+		half: heart_half
+		empty: heart_empty
+	}
+}
+}

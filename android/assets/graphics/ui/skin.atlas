@@ -1,0 +1,89 @@
+
+skin.png
+size: 128,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+button_checked
+  rotate: false
+  xy: 21, 39
+  size: 16, 16
+  split: 7, 7, 7, 7
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+button_checkedOver
+  rotate: false
+  xy: 85, 105
+  size: 16, 16
+  split: 7, 7, 7, 7
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+button_disabled
+  rotate: false
+  xy: 1, 1
+  size: 16, 16
+  split: 7, 7, 7, 7
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+button_down
+  rotate: false
+  xy: 1, 19
+  size: 16, 16
+  split: 7, 7, 7, 7
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+button_over
+  rotate: false
+  xy: 67, 87
+  size: 16, 16
+  split: 7, 7, 7, 7
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+button_up
+  rotate: false
+  xy: 67, 105
+  size: 16, 16
+  split: 7, 7, 7, 7
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+heart_empty
+  rotate: false
+  xy: 85, 95
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+heart_full
+  rotate: false
+  xy: 39, 47
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+heart_half
+  rotate: false
+  xy: 67, 77
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+touch_background
+  rotate: false
+  xy: 1, 57
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+touch_knob
+  rotate: false
+  xy: 1, 37
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1

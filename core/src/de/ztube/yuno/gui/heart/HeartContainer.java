@@ -1,6 +1,7 @@
 package de.ztube.yuno.gui.heart;
 
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import java.util.Stack;
 
@@ -11,12 +12,24 @@ import java.util.Stack;
 
 /**The HeartContainer manages the Hearts and displays them in a row*/
 public class HeartContainer extends HorizontalGroup{
+
     private Stack<Heart> hearts;
 
-    public HeartContainer(int heartCount){
+    private Heart.HeartStyle style;
+
+    public HeartContainer(int heartCount, Skin skin){
+        this(heartCount, skin.get(Heart.HeartStyle.class));
+    }
+
+    public HeartContainer(int heartCount, Skin skin, String styleName){
+        this(heartCount, skin.get(styleName, Heart.HeartStyle.class));
+    }
+
+    public HeartContainer(int heartCount, Heart.HeartStyle style){
+        this.style = style;
         hearts = new Stack<Heart>();
         for(int i = 0; i < heartCount; i++){
-            Heart heart = new Heart();
+            Heart heart = new Heart(style);
             hearts.push(heart);
             addActor(heart);
         }
@@ -25,7 +38,7 @@ public class HeartContainer extends HorizontalGroup{
 
     public void addHeart(int count) {
         for (int i = 0; i <= count; i++) {
-            Heart heart = new Heart(Heart.HeartState.EMPTY);
+            Heart heart = new Heart(Heart.HeartState.EMPTY, style);
             hearts.push(heart);
             addActor(heart);
         }

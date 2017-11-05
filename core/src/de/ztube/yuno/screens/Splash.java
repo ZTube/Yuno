@@ -134,9 +134,8 @@ public class Splash implements Screen {
 
     //Load the graphical assets
     private void loadGraphics() {
-        Yuno.assets.load("graphics/ui/game/skin.json", Skin.class);
+        Yuno.assets.load("graphics/ui/skin.json", Skin.class);
         Yuno.assets.load("graphics/entity/player/player.pack", TextureAtlas.class);
-        Yuno.assets.load("graphics/ui/game/icons.pack", TextureAtlas.class);
         for (FileHandle file : Gdx.files.internal("graphics/ui/menu/backgrounds/").list()) {
             if (!file.isDirectory())
                 Yuno.assets.load(file.path(), Texture.class);
